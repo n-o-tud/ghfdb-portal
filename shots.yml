@@ -1,0 +1,242 @@
+# Landing Page
+# - output: docs/_static/_mapping/shot-scraper/map-viewer-landing.PNG
+#   url: http://localhost:5173/HeatFlowMapping
+#   wait: 5000
+#   selec- output: docs/_static/_mapping/shot-scraper/statistics-descriptiv-statistics-number-values.PNG
+# url: http://localhost:5173/HeatFlowMapping
+# wait: 5000
+# javascript: |
+#   const statsBtn = document.querySelector('#StatisticsnavBarBtn');
+#   if (statsBtn) {
+#     const clickEvent = new MouseEvent('click', {
+#       bubbles: true,
+#       cancelable: true,
+#       view: window
+#     });
+#     statsBtn.dispatchEvent(clickEvent);
+#   }
+# wait-for: document.getElementById('offcanvasPanel').classList.contains('show')
+# selector: "#descriptivStatistics"r: "div#whfd-mapping"
+# Landing Page - Map Viewer Controls
+# - output: docs/_static/_mapping/shot-scraper/map-viewer-controls.PNG
+#   url: http://localhost:5173/HeatFlowMapping
+#   wait: 5000
+#   selector: "#whfd-mapping > div.wrapper.vstack.w-100.vh-100 > div.column.map.flex-grow-1.maplibregl-map > div.maplibregl-control-container > div.maplibregl-ctrl-top-right"
+# Landing Page - Navigation Bar
+# - output: docs/_static/_mapping/shot-scraper/map-viewer-navigation-bar.PNG
+#   url: http://localhost:5173/HeatFlowMapping
+#   wait: 5000
+#   selector: "#map-navbar"
+# Landing Page - Cursor Position
+# - output: docs/_static/_mapping/shot-scraper/map-viewer-cursor-position.PNG
+#   url: http://localhost:5173/HeatFlowMapping
+#   wait: 5000
+#   selector: "#whfd-mapping > div.wrapper.vstack.w-100.vh-100 > div.column.map.flex-grow-1.maplibregl-map > div.badge.rounded-pill.text-bg-light.position-absolute.start-0.bottom-0.m-2.fs-6.z-2.bg-opacity-50.d-none.d-md-block.mb-0.mb-md-3"
+# Settings - Basemaps
+# - output: docs/_static/_mapping/shot-scraper/settings-basemaps.PNG
+#   url: https://ihfc-iugg.github.io/HeatFlowMapping/
+#   javascript: |
+#     const settingsBtn = document.querySelector('#SettingsnavBarBtn');
+#     if (settingsBtn) {
+#       // Create and dispatch a click event
+#       const clickSettingsNavBarBtnEvent = new MouseEvent('click', {
+#         bubbles: true,
+#         cancelable: true,
+#         view: window
+#       });
+#       settingsBtn.dispatchEvent(clickSettingsNavBarBtnEvent);
+#     }
+#   wait-for: document.getElementById('offcanvasPanel').addEventListener('show.bs.offcanvas', event => {return true && removeEventListener('show.bs.offcanvas', this)})
+#   selector: "#base-maps-accordion"
+# # Settings - Heat Flow Models
+- output: docs/_static/_mapping/shot-scraper/settings-heat-flow-models.PNG
+  url: https://ihfc-iugg.github.io/HeatFlowMapping/
+  javascript: |
+    const settingsBtn = document.querySelector('#SettingsnavBarBtn');
+    if (settingsBtn) {
+      // Create and dispatch a click event
+      const clickSettingsNavBarBtnEvent = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window
+      });
+      settingsBtn.dispatchEvent(clickSettingsNavBarBtnEvent);
+    }
+  # wait-for: document.getElementById('offcanvasPanel').addEventListener('show.bs.offcanvas', event => {return true && removeEventListener('show.bs.offcanvas', this)})
+  wait-for: document.querySelector('#heaFlowModels-accordion-item')
+  selector: "#heaFlowModels-accordion-item"
+# # Settings - Data Driven Coloring
+# - output: docs/_static/_mapping/shot-scraper/settings-data-driven-coloring.PNG
+#   url: http://localhost:5173/HeatFlowMapping
+#   javascript: |
+#     const settingsBtn = document.querySelector('#SettingsnavBarBtn');
+#     if (settingsBtn) {
+#       // Create and dispatch a click event
+#       const clickSettingsNavBarBtnEvent = new MouseEvent('click', {
+#         bubbles: true,
+#         cancelable: true,
+#         view: window
+#       });
+#       settingsBtn.dispatchEvent(clickSettingsNavBarBtnEvent);
+#     }
+#   selector: "div#dataDrivenColoring-accordion-item.accordion-item"
+# # Settings - Circle Radius
+# - output: docs/_static/_mapping/shot-scraper/settings-circle-radius.PNG
+#   url: http://localhost:5173/HeatFlowMapping
+#   javascript: |
+#     const settingsBtn = document.querySelector('#SettingsnavBarBtn');
+#     if (settingsBtn) {
+#       // Create and dispatch a click event
+#       const clickSettingsNavBarBtnEvent = new MouseEvent('click', {
+#         bubbles: true,
+#         cancelable: true,
+#         view: window
+#       });
+#       settingsBtn.dispatchEvent(clickSettingsNavBarBtnEvent);
+#     }
+#   wait-for: document.getElementById('offcanvasPanel')addEventListener('show.bs.offcanvas', event => {return true})
+#   selector: "div#circleRadius-accordion-item.accordion-item"
+# # Settings - Circle Color
+# - output: docs/_static/_mapping/shot-scraper/settings-circle-color.PNG
+#   url: http://localhost:5173/HeatFlowMapping
+#   javascript: |
+#     const settingsBtn = document.querySelector('#SettingsnavBarBtn');
+#     if (settingsBtn) {
+#       // Create and dispatch a click event
+#       const clickSettingsNavBarBtnEvent = new MouseEvent('click', {
+#         bubbles: true,
+#         cancelable: true,
+#         view: window
+#       });
+#       settingsBtn.dispatchEvent(clickSettingsNavBarBtnEvent);
+#     }
+#   selector: "div#circleFillColor-accordion-item.accordion-item"
+# Filter - Attribute Filter
+# - output: docs/_static/_mapping/shot-scraper/filter-attribute.PNG
+#   url: http://localhost:5173/HeatFlowMapping
+#   javascript: |
+#     const filterBtn = document.querySelector('button#FilternavBarBtn');
+#     if (filterBtn) {
+#       // Create and dispatch a click event
+#       const clickFilterNavBarBtnEvent = new MouseEvent('click', {
+#         bubbles: true,
+#         cancelable: true,
+#         view: window
+#       });
+#       filterBtn.dispatchEvent(clickFilterNavBarBtnEvent);
+#     }
+#   wait: 1000
+#   selector: "div#attribute-filter-accordion-item"
+# # Filter - Attribute Filter - Filter Element
+# - output: docs/_static/_mapping/shot-scraper/filter-attribute-filter-element.PNG
+#   url: http://localhost:5173/HeatFlowMapping
+#   javascript: |
+#     const filterBtn = document.querySelector('button#FilternavBarBtn');
+#     if (filterBtn) {
+#       // Create and dispatch a click event
+#       const clickFilterNavBarBtnEvent = new MouseEvent('click', {
+#         bubbles: true,
+#         cancelable: true,
+#         view: window
+#       });
+#       filterBtn.dispatchEvent(clickFilterNavBarBtnEvent);
+#       const addFilterBtn = document.querySelector("#add-filter-btn");
+#       if (addFilterBtn) {
+#         const clickAddFilterBtnEvent = new MouseEvent('click', {
+#           bubbles: true,
+#           cancelable: true,
+#           view: window
+#         });
+#         addFilterBtn.dispatchEvent(clickAddFilterBtnEvent);
+#       }
+#     }
+#   wait: 1000
+#   selector: "div#attribute-filter"
+# # Filter - Location Filter
+# - output: docs/_static/_mapping/shot-scraper/filter-location.PNG
+#   url: http://localhost:5173/HeatFlowMapping
+#   javascript: |
+#     const filterBtn = document.querySelector('button#FilternavBarBtn');
+#     if (filterBtn) {
+#       // Create and dispatch a click event
+#       const clickFilterNavBarBtnEvent = new MouseEvent('click', {
+#         bubbles: true,
+#         cancelable: true,
+#         view: window
+#       });
+#       filterBtn.dispatchEvent(clickFilterNavBarBtnEvent);
+#     }
+#   wait: 1000
+#   selector: "div#locationFilter-accordion-item.accordion-item"
+# # Statistics - Example Heat Flow Value (number values)
+# - output: docs/_static/_mapping/shot-scraper/statistics-descriptiv-statistics-number-values.PNG
+#   url: http://localhost:5173/HeatFlowMapping
+#   javascript: |
+#     // Using jQuery to handle the interaction sequence
+#     $('#StatisticsnavBarBtn').trigger('click').promise().done(function() {
+#       // Wait for offcanvas to be visible
+#       setTimeout(function() {
+#         const $multiselect = $('#statisticsPropertySelect.vue-multiselect');
+
+#         if ($multiselect.length) {
+#           // Create the event data
+#           const eventData = {
+#             detail: {
+#               title: 'Heat Flow Value',
+#               key: 'q'
+#             }
+#           };
+
+#           // Trigger both events using jQuery
+#           $multiselect
+#             .trigger(new CustomEvent('update:modelValue', eventData))
+#             .trigger(new CustomEvent('select', eventData));
+#         }
+#       }, 1000);
+#     });
+#   wait: 1000
+#   selector: "#descriptivStatistics"
+# # Statistics - Example Basic geographical environment (classified values)
+# - output: docs/_static/_mapping/shot-scraper/statistics-descriptiv-statistics-classified-values.PNG
+#   url: http://localhost:5173/HeatFlowMapping
+#   wait: 10000
+#   javascript: |
+#     // First click the Statistics button to open the panel
+#     const statsBtn = document.querySelector('#StatisticsnavBarBtn');
+#     if (statsBtn) {
+#       // Create and dispatch click event for Statistics button
+#       const clickStatsBtnEvent = new MouseEvent('click', {
+#         bubbles: true,
+#         cancelable: true,
+#         view: window
+#       });
+#       statsBtn.dispatchEvent(clickStatsBtnEvent);
+
+#       // Wait for the offcanvas to be visible and then handle the multiselect
+#       setTimeout(() => {
+#         // Find the VueMultiselect element
+#         const multiselect = document.querySelector('#statisticsPropertySelect');
+#         if (multiselect) {
+#           // Create and dispatch a custom input event with the value
+#           const inputEvent = new CustomEvent('update:modelValue', {
+#             detail: {
+#               title: 'Basic geographical environment',
+#               key: 'environment'
+#             }
+#           });
+#           multiselect.dispatchEvent(inputEvent);
+
+#           // Trigger the select event to run the associated methods
+#           const selectEvent = new CustomEvent('select', {
+#             detail: {
+#               title: 'Basic geographical environment',
+#               key: 'environment'
+#             }
+#           });
+#           multiselect.dispatchEvent(selectEvent);
+#         }
+#       }, 1000); // Wait 1 second for the offcanvas to open
+#     }
+#   wait: 10000
+#   # wait-for: document.getElementById('statisticGraph').on('plotly_afterplot', () => true)
+#   selector: "#statisticGraph"

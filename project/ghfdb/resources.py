@@ -9,16 +9,26 @@ from fairdm.contrib.contributors.models import Person
 from fairdm.contrib.location.models import Point
 from fairdm.contrib.location.utils import normalize_coordinate
 from heat_flow.models import HeatFlow, HeatFlowInterval
-from heat_flow.models.measurements import IntervalConductivity, SurfaceHeatFlow, ThermalGradient
+from heat_flow.models.measurements import (
+    IntervalConductivity,
+    SurfaceHeatFlow,
+    ThermalGradient,
+)
 from heat_flow.models.samples import HeatFlowSite
 from import_export.fields import Field
 from import_export.formats.base_formats import XLSX
 from import_export.resources import ModelResource
-from import_export.widgets import BooleanWidget, CharWidget, ForeignKeyWidget, ManyToManyWidget
+from import_export.widgets import (
+    BooleanWidget,
+    CharWidget,
+    ForeignKeyWidget,
+    ManyToManyWidget,
+)
 from literature.models import LiteratureItem
 from research_vocabs.fields import ConceptField, ConceptManyToManyField
 from research_vocabs.models import Concept
-from review.models import Review
+
+# from review.models import Review # commented out to reduce influence
 
 # list of fields that contains controlled vocabulary choices that need to be cleaned
 # fields correlate to spreadsheet columns
@@ -139,7 +149,9 @@ class SimpleConceptField(forms.ChoiceField):
             # we invert the choices because spreadsheet values are displayed as labels
             # kwargs["choices"] = [(x[1], x[0]) for x in self.vocabulary().choices]
             kwargs["choices"] = self.vocabulary().choices
-        self.inverted_choices = {label.lower(): value for value, label in kwargs["choices"]}
+        self.inverted_choices = {
+            label.lower(): value for value, label in kwargs["choices"]
+        }
         super().__init__(*args, **kwargs)
 
     def to_python(self, value):
@@ -208,13 +220,17 @@ def case_insensitive_qs(vocabulary, field="label"):
 
 
 def validate_concept(value, vocabulary, field="label"):
-    choices = case_insensitive_qs(vocabulary, field=field).values_list("ilabel", flat=True)
+    choices = case_insensitive_qs(vocabulary, field=field).values_list(
+        "ilabel", flat=True
+    )
     invalid = []
     for val in value:
         if val.lower() not in choices:
             invalid.append(val)
     if invalid:
-        raise ValidationError(f"The following values are not part of the {vocabulary().label()} vocabulary: {invalid}")
+        raise ValidationError(
+            f"The following values are not part of the {vocabulary().label()} vocabulary: {invalid}"
+        )
 
 
 class CustomMultiSelect(forms.ModelMultipleChoiceField):
@@ -263,8 +279,32 @@ class YesNoWidget(BooleanWidget):
     This widget is useful for parsing user input or data sources where boolean values may be represented in multiple formats.
     """
 
-    TRUE_VALUES = ["1", 1, True, "true", "TRUE", "True", "Yes", "yes", "YES", "[Yes]", "[yes]"]
-    FALSE_VALUES = ["0", 0, False, "false", "FALSE", "False", "No", "no", "NO", "[No]", "[no]"]
+    TRUE_VALUES = [
+        "1",
+        1,
+        True,
+        "true",
+        "TRUE",
+        "True",
+        "Yes",
+        "yes",
+        "YES",
+        "[Yes]",
+        "[yes]",
+    ]
+    FALSE_VALUES = [
+        "0",
+        0,
+        False,
+        "false",
+        "FALSE",
+        "False",
+        "No",
+        "no",
+        "NO",
+        "[No]",
+        "[no]",
+    ]
 
 
 class ForeignObjectWidget(ForeignKeyWidget):
@@ -446,7 +486,9 @@ class GHFDBImportFormat(XLSX):
         import openpyxl
 
         # 'data_only' means values are read from formula cells, not the formula itself
-        xlsx_book = openpyxl.load_workbook(BytesIO(in_stream), read_only=True, data_only=True)
+        xlsx_book = openpyxl.load_workbook(
+            BytesIO(in_stream), read_only=True, data_only=True
+        )
 
         dataset = tablib.Dataset()
         sheet = xlsx_book["data list"]
@@ -532,7 +574,9 @@ class GHFDBResource(ModelResource):
     # Child fields
     qc = Field("value")
     qc_uncertainty = Field("uncertainty")
-    q_method = Field("method", widget=MultiConceptWidget(vocabulary=HeatFlow.method_vocab))
+    q_method = Field(
+        "method", widget=MultiConceptWidget(vocabulary=HeatFlow.method_vocab)
+    )
     q_top = Field("top")
     q_bottom = Field("bottom")
     probe_penetration = Field("probe_penetration")
@@ -542,19 +586,40 @@ class GHFDBResource(ModelResource):
     c_comment = Field("c_comment")
 
     corr_IS_flag = Field(
-        "corr_IS_flag", widget=MultiConceptWidget(vocabulary=HeatFlow.corr_IS_flag_vocab, field="label")
+        "corr_IS_flag",
+        widget=MultiConceptWidget(
+            vocabulary=HeatFlow.corr_IS_flag_vocab, field="label"
+        ),
     )
-    corr_T_flag = Field("corr_T_flag", widget=MultiConceptWidget(vocabulary=HeatFlow.corr_T_flag_vocab))
-    corr_S_flag = Field("corr_S_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_S_flag_vocab))
-    corr_E_flag = Field("corr_E_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_E_flag_vocab))
-    corr_TOPO_flag = Field("corr_TOPO_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_TOPO_flag_vocab))
-    corr_PAL_flag = Field("corr_PAL_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_PAL_flag_vocab))
-    corr_SUR_flag = Field("corr_SUR_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_SUR_flag_vocab))
-    corr_CONV_flag = Field("corr_CONV_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_CONV_flag_vocab))
-    corr_HR_flag = Field("corr_HR_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_HR_flag_vocab))
+    corr_T_flag = Field(
+        "corr_T_flag", widget=MultiConceptWidget(vocabulary=HeatFlow.corr_T_flag_vocab)
+    )
+    corr_S_flag = Field(
+        "corr_S_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_S_flag_vocab)
+    )
+    corr_E_flag = Field(
+        "corr_E_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_E_flag_vocab)
+    )
+    corr_TOPO_flag = Field(
+        "corr_TOPO_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_TOPO_flag_vocab)
+    )
+    corr_PAL_flag = Field(
+        "corr_PAL_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_PAL_flag_vocab)
+    )
+    corr_SUR_flag = Field(
+        "corr_SUR_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_SUR_flag_vocab)
+    )
+    corr_CONV_flag = Field(
+        "corr_CONV_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_CONV_flag_vocab)
+    )
+    corr_HR_flag = Field(
+        "corr_HR_flag", widget=ConceptWidget(vocabulary=HeatFlow.corr_HR_flag_vocab)
+    )
 
     expedition = Field("expedition")
-    probe_type = Field("probe_type", widget=MultiConceptWidget(vocabulary=HeatFlow.probe_type_vocab))
+    probe_type = Field(
+        "probe_type", widget=MultiConceptWidget(vocabulary=HeatFlow.probe_type_vocab)
+    )
     probe_length = Field("probe_length")
     probe_tilt = Field("probe_tilt")
     water_temperature = Field("water_temperature")
@@ -565,7 +630,9 @@ class GHFDBResource(ModelResource):
     T_grad_mean = Field("thermal_gradient__value", readonly=True)
     T_grad_uncertainty = Field("thermal_gradient__uncertainty", readonly=True)
     T_grad_mean_cor = Field("thermal_gradient__corrected_value", readonly=True)
-    T_grad_uncertainty_cor = Field("thermal_gradient__corrected_uncertainty", readonly=True)
+    T_grad_uncertainty_cor = Field(
+        "thermal_gradient__corrected_uncertainty", readonly=True
+    )
     T_method_top = Field("thermal_gradient__method_top", readonly=True)
     T_method_bottom = Field("thermal_gradient__method_bottom", readonly=True)
     T_shutin_top = Field("thermal_gradient__shutin_top", readonly=True)
@@ -678,7 +745,9 @@ class GHFDBResource(ModelResource):
         if "Reviewer_name" not in first_row:
             raise ValueError("Reviewer_name column is missing from the dataset.")
         if "publication_reference" not in first_row:
-            raise ValueError("publication_reference column is missing from the dataset.")
+            raise ValueError(
+                "publication_reference column is missing from the dataset."
+            )
 
         # Collect all unique reviewer names and publication references from the dataset
         reviewer_names = set()

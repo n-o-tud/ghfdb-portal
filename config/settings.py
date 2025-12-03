@@ -16,12 +16,43 @@ fairdm.setup(
         # "fairdm_geo.geology.lithology",
         "fairdm_geo.geology.stratigraphy",
         # "fairdm_geo.geology.geologic_time",
+        "drf_spectacular",
+        "rest_framework",
+        "restapi",
     ],
     addons=[
         "fairdm_discussions",
-        "fairdm_api",
+        # "fairdm_api",
     ],
 )
+
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    # "DEFAULT_FILTER_BACKENDS": ["django_filters.rest_framework.DjangoFilterBackend"],
+    "DEFAULT_RENDERER_CLASSES": (
+        "drf_orjson_renderer.renderers.ORJSONRenderer",
+        "rest_framework.renderers.BrowsableAPIRenderer",
+    ),
+    "DEFAULT_PARSER_CLASSES": ("drf_orjson_renderer.parsers.ORJSONParser",),
+}
+
+# # metadata for your API
+SPECTACULAR_SETTINGS = {
+    "TITLE": "GHFDB API",
+    "DESCRIPTION": "Here GHFDB description",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+    # OTHER SETTINGS
+    # "SWAGGER_UI_SETTINGS": {
+    #     "deepLinking": True,
+    #     "persistAuthorization": True,
+    #     "displayOperationId": True,
+    # },
+    # available SwaggerUI versions: https://github.com/swagger-api/swagger-ui/releases
+    # "SWAGGER_UI_DIST": "https://cdn.jsdelivr.net/npm/swagger-ui-dist@latest",  # default
+    # "SWAGGER_UI_FAVICON_HREF": settings.STATIC_URL
+    # + "your_company_favicon.png",  # default is swagger favicon
+}
 
 
 EASY_ICONS = globals().get("EASY_ICONS", {})
@@ -140,7 +171,7 @@ FAIRDM_CONFIG = {
     "repository_url": "https://github.com/ihfc-iugg/ghfdb-portal",
     "header_links_before_dropdown": 5,
     "logo": {
-        "text": _("Global Heat Flow Database Portal"),
+        # "text": _("Global Heat Flow Database Portal"),
         "image_dark": "img/brand/logo.svg",
         "image_light": "img/brand/logo.svg",
     },
@@ -171,4 +202,6 @@ FAIRDM_CONFIG = {
     ],
 }
 
-CSRF_TRUSTED_ORIGINS = [f"https://{domain}" for domain in globals().get("ALLOWED_HOSTS", [])]
+CSRF_TRUSTED_ORIGINS = [
+    f"https://{domain}" for domain in globals().get("ALLOWED_HOSTS", [])
+]
